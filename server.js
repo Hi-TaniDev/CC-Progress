@@ -1,10 +1,11 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const db = require("./src/config/dabatabase");
-const routes = require("./src/routes/routes");
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import db from "./src/config/database.js";
+import routes from "./src/routes/routes.js";
 dotenv.config();
+
 const app = express();
 const port = 5000;
 

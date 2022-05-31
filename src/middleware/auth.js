@@ -1,7 +1,7 @@
-const Users = require('../models/users');
-const jwt = require('jsonwebtoken');
+import Users from '../models/users.js';
+import jwt from 'jsonwebtoken';
 
-const refreshToken = async(req, res) => {
+export const refreshToken = async(req, res) => {
     try {   
         const refreshToken = req.cookies.refreshToken;
         if(!refreshToken){
@@ -35,7 +35,7 @@ const refreshToken = async(req, res) => {
     }
 }
 
-const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if(token == null){
@@ -49,5 +49,3 @@ const verifyToken = (req, res, next) => {
         next();
     })
 }
-
-module.export = { refreshToken, verifyToken }

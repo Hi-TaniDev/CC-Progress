@@ -1,7 +1,6 @@
-const express = require("express");
-const { getUsers, register, login, logout } = require("../controllers/auth")
-const { refreshToken, verifyToken } = require("../middleware/auth")
-
+import express from "express";
+import { getUsers, register, login, logout } from "../controllers/auth.js";
+import { refreshToken, verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -13,4 +12,4 @@ router.get('/token', refreshToken);
 router.delete('/logout', logout);
 
 
-module.exports = router;
+export default router;

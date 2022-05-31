@@ -1,8 +1,8 @@
-const Users = require('../models/users');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import Users from '../models/users.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-const getUsers = async(req, res) => {
+export const getUsers = async(req, res) => {
     try {
         const users = await Users.findAll({
             attributes:['id', 'name', 'email']
@@ -13,13 +13,13 @@ const getUsers = async(req, res) => {
     }
 }
 
-const register = async(req, res) => {
+export const register = async(req, res) => {
     const {name, email, password, confPassword} = req.body;
     if(password !== confPassword){
         return res.status(400).json( {msg: "Password yang anda masukkan tidak cocok"});
     }
     
-    const oldUser = await Users.findOne({email});
+    const oldUser = await findOne({email});
     if(oldUser){
         return res.status(409).json({msg: "User Already Exist. Please Login"})
     }
@@ -38,7 +38,7 @@ const register = async(req, res) => {
     }
 }
 
-const login = async(req, res) => {
+export const login = async(req, res) => {
     try {
         const user = await Users.findaAll({
             where:{
@@ -75,7 +75,7 @@ const login = async(req, res) => {
     }
 }
 
-const logout = async(req, res) => {
+export const logout = async(req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if(!refreshToken) {
         return res.sendStatus(204);
@@ -97,6 +97,3 @@ const logout = async(req, res) => {
     res.clearCookie('refreshToken');
     return res.sendStatus(200);
 }
-
-
-module.exports = { getUsers, register, login, logout };

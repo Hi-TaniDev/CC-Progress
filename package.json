@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "nodemon src/server.js"
   },
@@ -17,5 +18,8 @@
     "mysql2": "^2.3.3",
     "nanoid": "^3.3.4",
     "sequelize": "^6.20.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }

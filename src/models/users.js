@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
-const db = require('../config/dabatabase');
+import Sequelize from "sequelize";
+import db from "../config/database.js"
 
-const users = db.define('users', {
+const Users = db.define('users', {
     nama: {
         type: Sequelize.DataTypes.STRING
     },
@@ -22,4 +22,4 @@ const users = db.define('users', {
     await db.sync();
 })();
 
-module.exports = users;
+export default Users;
