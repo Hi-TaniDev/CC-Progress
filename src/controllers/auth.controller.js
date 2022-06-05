@@ -7,42 +7,100 @@ const bcrypt = require("bcryptjs");
 
 const { customAlphabet } = require("nanoid");
 
+// Mysql DB
+// const register = (req, res) => {
+//     let nanoid = customAlphabet('1234567890', 8);
+//     User.create({
+//         id: nanoid(),
+//         name: req.body.name,
+//         email: req.body.email,
+//         password: bcrypt.hashSync(req.body.password, 8)
+//     }).then(() => {
+//         res.send({message: "User was registered succesfully!"})
+//     }).catch(err => {
+//         res.status(500).send({
+//             message: err.message
+//         });
+//     });
+// };
+
+// const login = (req, res) => {
+//     User.findOne({
+//         where: {
+//             email: req.body.email,
+//         }
+//     }).then(user => {
+//         if(!user){
+//             return res.status(404).send({
+//                 message: "Pengguna tidak ditemukan!"
+//             });
+//         }
+
+//         let passwordIsValid = bcrypt.compareSync(
+//             req.body.password,
+//             user.password
+//         );
+//         if(!passwordIsValid){
+//             return res.status(401).send({
+//                 accessToken: null,
+//                 message: "Password Salah!"
+//             });
+//         }
+        
+//         let token = jwt.sign({ id: user.id }, config.secret, {
+//             expiresIn: 43200
+//         });
+
+//         res.status(200).send({
+//             id: user.id,
+//             name: user.name,
+//             email: user.email,
+//             accessToken: token
+//         })
+//     }).catch(err => {
+//         res.status(500).send({message: err.message});
+//     })
+// };
+
+// MongoDB
 const register = (req, res) => {
     let nanoid = customAlphabet('1234567890', 8);
-    User.create({
+    const user = new User({
         id: nanoid(),
         name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8)
-    }).then( () => {
-        res.send({message: "User was registered succesfully!"})
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message
-        });
+    });
+    user.save((err, user) => {
+        if(err){
+            res.status(500).send({
+                message: err
+            });
+            return;
+        };
     });
 };
 
 const login = (req, res) => {
     User.findOne({
-        where: {
-            email: req.body.email,
-        }
-    }).then(user => {
+        email: req.body.email
+    }).populate(
+        "users", "-__v"
+    ).exec((err, user) => {
         if(!user){
             return res.status(404).send({
                 message: "Pengguna tidak ditemukan!"
             });
         }
-
-        let passwordIsValid = bcrypt.compareSync(
-            req.body.password,
-            user.password
-        );
+        if(err){
+            res.status(500).send({
+                message: err
+            });
+        }
         if(!passwordIsValid){
             return res.status(401).send({
                 accessToken: null,
-                message: "Password tidak ditemukan!"
+                message: "Password Salah!"
             });
         }
         
@@ -55,10 +113,21 @@ const login = (req, res) => {
             name: user.name,
             email: user.email,
             accessToken: token
-        })
-    }).catch(err => {
-        res.status(500).send({message: err.message});
+        });
     })
-};
+}
 
-module.exports = { register, login }
+const logout = async (req, res) => {
+    try {
+        req.session = null;
+        jwt.tok
+        return res.status(200).send({
+            message: "Logout berhasil"
+        });
+    }
+    catch (err) {
+        this.next(err);
+    }
+}
+
+module.exports = { register, login, logout }

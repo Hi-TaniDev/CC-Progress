@@ -27,5 +27,18 @@ app.listen(PORT, () => {
 
 const db = require("./src/models");
 const authRoutes = require("./src/routes/auth.routes");
+const dbConfig = require("./src/config/db.config");
 
-db.sequelize.sync();
+// Mmysql DB
+// db.sequelize.sync();
+
+// MongoDB
+db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then( () => {
+    console.log("Succesfully connect to MongoDB.");
+}).catch((err) => {
+    console.error("Connection Error", err);
+    process.exit();
+});

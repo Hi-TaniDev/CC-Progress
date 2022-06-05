@@ -1,5 +1,5 @@
 const { verifySignUp } = require("../middleware");
-const { register, login } = require("../controllers/auth.controller.js")
+const { register, login, logout } = require("../controllers/auth.controller.js")
 
 module.exports = function(app) {
     app.use( (req, res, next) => {
@@ -13,5 +13,6 @@ module.exports = function(app) {
 
     app.post("/register", verifySignUp.checkDuplicateEmail, register);
     app.post("/login", login);
+    app.post("/logout", logout);
 };
 
