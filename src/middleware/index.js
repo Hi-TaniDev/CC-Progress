@@ -1,5 +1,5 @@
 const authJwt = require("./authJwt.js");
 const verifySignUp = require("./verifySignUp.js");
-const uploadFiles = require("./upload.js");
+const upload = require("./upload.js");
 
-module.exports = { authJwt, verifySignUp, uploadFiles };
+module.exports = { authJwt, verifySignUp, upload };

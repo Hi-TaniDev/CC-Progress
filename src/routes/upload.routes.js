@@ -1,5 +1,5 @@
 const { authJwt } = require("../middleware/authJwt.js");
-const { uploadFilesMiddleware } = require("../middleware/upload.js")
+const { upload } = require("../middleware/upload.js")
 const { uploadFiles } = require("../controllers/upload.controller.js");
 
 module.exports = function(app) {
