@@ -46,6 +46,6 @@ const checkDuplicateEmail = (req, res, next) => {
     })
 }
 
-const verifySignUp = { checkDuplicateEmail :  checkDuplicateEmail };
+const verifySignUp = { checkDuplicateEmail };
 
 module.exports = verifySignUp;

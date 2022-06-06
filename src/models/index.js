@@ -31,4 +31,5 @@ const db = {};
 
 db.mongoose = mongoose;
 db.user = require("./users.model.js");
+db.photo = require("./photo.model.js");
 module.exports = db;

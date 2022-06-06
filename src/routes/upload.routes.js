@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware/authJwt.js");
-const userController = require("../controllers/user.controller.js");
+const { uploadFilesMiddleware } = require("../middleware/upload.js")
+const { uploadFiles } = require("../controllers/upload.controller.js");
 
 module.exports = function(app) {
     app.use( (req, res, next) => {
@@ -11,6 +12,6 @@ module.exports = function(app) {
         next();
     });
 
-    app.get("/publicBoard", userController.allAccess);
-    app.get("/userBoard", authJwt.verifyToken, userController.userAccess);
+    app.post("/upload", [authJwt.verifyToken], uploadFiles);
+    // app.get("/files", authJwt.verifyToken, getListFiles);
 };

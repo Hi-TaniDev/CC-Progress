@@ -17,5 +17,6 @@
 module.exports = {
     HOST: "localhost",
     PORT: 27017,
-    DB: "app_db"
+    DB: "app_db",
+    PHOTOBUCKET: "photos"
 }

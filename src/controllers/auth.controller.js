@@ -65,28 +65,34 @@ const { customAlphabet } = require("nanoid");
 // MongoDB
 const register = (req, res) => {
     let nanoid = customAlphabet('1234567890', 8);
-    const user = new User({
-        id: nanoid(),
-        name: req.body.name,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8)
-    });
-    user.save((err, user) => {
-        if(err){
-            res.status(500).send({
-                message: err
-            });
-            return;
-        };
-    });
+    if (req.body.confPassword === req.body.password) {
+        const user = new User({
+            id: nanoid(),
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 8)
+        });
+        user.save((err, user) => {
+            if(err){
+                res.status(500).send({
+                    message: err
+                });
+                return;
+            };
+           res.status(200).send({ message: "User succesfully registered!"});
+           return;
+        });
+    } else{
+        res.status(403).send({ message : "Pastikan password yang anda masukkan sama!"});
+        return;
+    }
+    
 };
 
 const login = (req, res) => {
     User.findOne({
         email: req.body.email
-    }).populate(
-        "users", "-__v"
-    ).exec((err, user) => {
+    }).exec((err, user) => {
         if(!user){
             return res.status(404).send({
                 message: "Pengguna tidak ditemukan!"
@@ -97,6 +103,12 @@ const login = (req, res) => {
                 message: err
             });
         }
+
+        let passwordIsValid = bcrypt.compareSync(
+            req.body.password,
+            user.password
+        );
+
         if(!passwordIsValid){
             return res.status(401).send({
                 accessToken: null,
@@ -105,7 +117,7 @@ const login = (req, res) => {
         }
         
         let token = jwt.sign({ id: user.id }, config.secret, {
-            expiresIn: 43200
+            expiresIn: 7200
         });
 
         res.status(200).send({
@@ -120,7 +132,6 @@ const login = (req, res) => {
 const logout = async (req, res) => {
     try {
         req.session = null;
-        jwt.tok
         return res.status(200).send({
             message: "Logout berhasil"
         });
