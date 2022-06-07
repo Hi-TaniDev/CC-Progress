@@ -141,4 +141,6 @@ const logout = async (req, res) => {
     }
 }
 
-module.exports = { register, login, logout }
+const authController = { register, login, logout };
+
+module.exports = { authController };

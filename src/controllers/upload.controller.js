@@ -52,4 +52,6 @@ const uploadFiles = async(req, res) => {
 //     }
 // }
 
-module.exports = { uploadFiles }
+const uploadController = { uploadFiles };
+
+module.exports = { uploadController };

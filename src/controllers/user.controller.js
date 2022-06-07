@@ -1,8 +1,12 @@
-exports.allAccess = (req, res) => {
+const allAccess = (req, res) => {
     res.status(200).send({message: "This is public content"});
 }
 
-exports.userAccess = (req, res) => {
+const userAccess = (req, res) => {
     res.status(200).send({message: "This is user content"});
 }
+
+const userController = { allAccess, userAccess };
+
+module.exports = { userController };
 

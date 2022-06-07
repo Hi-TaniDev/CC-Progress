@@ -1,6 +1,5 @@
-const { authJwt } = require("../middleware/authJwt.js");
-const { upload } = require("../middleware/upload.js")
-const { uploadFiles } = require("../controllers/upload.controller.js");
+const { authJwt } = require("../middleware/");
+const { uploadController } = require("../controllers/upload.controller.js");
 
 module.exports = function(app) {
     app.use( (req, res, next) => {
@@ -12,6 +11,6 @@ module.exports = function(app) {
         next();
     });
 
-    app.post("/upload", [authJwt.verifyToken], uploadFiles);
+    app.post("/upload", authJwt.verifyToken, uploadController.uploadFiles);
     // app.get("/files", authJwt.verifyToken, getListFiles);
 };

@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../models/index.js");
 const User = db.user;
 
 // Mysql DB
@@ -29,23 +29,20 @@ const User = db.user;
 const checkDuplicateEmail = (req, res, next) => {
     User.findOne({
         email: req.body.email
-    }).exec((user, err) => {
-        if(user){
-            res.status(400).send({
-                message: "Gagal! Email sudah terdaftar."
-            });
-            return;
+    }).exec((err, user) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
         }
-        if(err){
-            res.status(500).send({
-                message: err
-            });
-            return;
+        if (user) {
+          res.status(400).send({ message: "Gagal! Email sudah pernah digunakan!" });
+          return;
         }
         next();
-    })
-}
+    });
+};
+
 
 const verifySignUp = { checkDuplicateEmail };
 
-module.exports = verifySignUp;
+module.exports = { verifySignUp };
