@@ -4,10 +4,10 @@ const { GridFsStorage } = require("multer-gridfs-storage");
 const dbConfig = require("../config/db.config.js");
 const { resolve } = require("path");
 
-let storageUrl = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}.`
+let storageUrl = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`;
 
 const storage = new GridFsStorage({
-    url: storageUrl,
+    url: `${storageUrl}`,
     options: { useNewUrlParser: true, useUnifiedTopology: true },
     file: (req, file) => {
         return new Promise((resolve, reject) => {
