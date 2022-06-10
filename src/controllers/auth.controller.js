@@ -120,7 +120,14 @@ const login = (req, res) => {
             expiresIn: 7200
         });
 
-        res.status(200).send({
+        res
+        .cookie("accessToken", token, {
+            httpOnly : true
+        })
+        .cookie("userId", user.id, {
+            httpOnly : true
+        })
+        .status(200).send({
             id: user.id,
             name: user.name,
             email: user.email,
@@ -132,6 +139,8 @@ const login = (req, res) => {
 const logout = async (req, res) => {
     try {
         req.session = null;
+        res.clearCookie("userId");
+        res.clearCookie("accessToken");
         return res.status(200).send({
             message: "Logout berhasil"
         });
