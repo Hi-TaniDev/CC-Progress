@@ -12,5 +12,5 @@ module.exports = function(app) {
     });
 
     app.post("/upload", authJwt.verifyToken, uploadController.uploadFiles);
-    // app.get("/files", authJwt.verifyToken, getListFiles);
+    app.get("/files", authJwt.verifyToken, uploadController.getListFiles);
 };
