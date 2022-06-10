@@ -11,7 +11,7 @@ module.exports = function(app) {
         next();
     });
 
-    app.post("/register", [verifySignUp.checkDuplicateEmail], authController.register);
+    app.post("/register", verifySignUp.checkDuplicateEmail, authController.register);
     app.post("/login", authController.login);
     app.post("/logout", authController.logout);
 };

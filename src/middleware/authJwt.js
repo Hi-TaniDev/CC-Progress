@@ -3,7 +3,7 @@ const config = require("../config/auth.config.js")
 const db = require("../models");
 
 const verifyToken = (req, res, next) => {
-    let token = req.headers["x-access-token"];
+    let token = req.cookies.accessToken;
     if(!token){
         return res.status(403).send({
             message: "Tidak ada token disematkan!"

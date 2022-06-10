@@ -34,7 +34,7 @@ const getListFiles = async(req, res) => {
         const database = mongoClient.db(dbConfig.DB);
         const images = database.collection(dbConfig.PHOTOBUCKET + ".files");
         const cursor = images.find({
-            "metadata.userId" : req.body.userId
+            "metadata.userId" : req.cookies.userId
         });
         if((await cursor.count) === 0){
             return res.status(500).send({

@@ -19,7 +19,7 @@ const storage = new GridFsStorage({
             const fileInfo = {
                 bucketName: dbConfig.PHOTOBUCKET,
                 filename: `${Date.now()}-Hitani-${file.originalname}`,
-                metadata: { userId : req.userId, }
+                metadata: { userId : req.cookies.userId, }
             }
             resolve(fileInfo);
         })
