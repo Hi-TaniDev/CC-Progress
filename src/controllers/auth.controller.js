@@ -67,7 +67,7 @@ const register = (req, res) => {
     let id = crypto.randomBytes(8).toString("hex");;
     if (req.body.confPassword === req.body.password) {
         const user = new User({
-            id: nanoid(),
+            id: id,
             name: req.body.name,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 8)
