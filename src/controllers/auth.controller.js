@@ -1,5 +1,5 @@
-const db = ("../models");
-const config = ("../config/auth.config");
+const db = require("../models");
+const config = require("../config/auth.config");
 const User = db.user;
 
 const jwt = require("jsonwebtoken");
@@ -64,7 +64,7 @@ const crypto = require("crypto");
 
 // MongoDB
 const register = (req, res) => {
-    let id = crypto.randomBytes(8).toString("hex");;
+    let id = crypto.randomBytes(16).toString("hex");
     if (req.body.confPassword === req.body.password) {
         const user = new User({
             id: id,
