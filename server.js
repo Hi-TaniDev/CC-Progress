@@ -8,6 +8,7 @@ const Grid = require("gridfs-stream");
 
 const db = require("./src/models");
 const dbConfig = require("./src/config/db.config");
+const cookieParser = require("cookie-parser");
 
 let gfs;
 
@@ -20,7 +21,8 @@ let corsOptions = {
 
 // MongoDB
 const initDB = async () => {
-    db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    // db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    db.mongoose.connect(`${dbConfig.HOST}/${dbConfig.DB}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then( () => {
@@ -40,6 +42,8 @@ conn.once("open", function () {
 
 app.use(cors(corsOptions));
 
+app.use(cookieParser());
+
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
@@ -52,7 +56,7 @@ require("./src/routes/auth.routes.js")(app);
 require("./src/routes/user.routes.js")(app);
 require("./src/routes/upload.routes.js")(app);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
     console.log(`Server is running on : http://localhost:${PORT}`);
