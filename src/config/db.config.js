@@ -21,7 +21,7 @@
 //     PHOTOBUCKET: "photos"
 // }
 
-const dbUrl = "mongodb+srv://ardo:" + encodeURIComponent("jonathanleonardo") + "@hitani.uicwz.mongodb.net"
+const dbUrl = "mongodb+srv://admin:" + encodeURIComponent("admin") + "@hitani.0dt11yi.mongodb.net"
 
 module.exports = {
     HOST : dbUrl,
