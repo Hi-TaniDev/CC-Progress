@@ -1,11 +1,11 @@
-const db = require("../models");
-const config = require("../config/auth.config");
+const db = ("../models");
+const config = ("../config/auth.config");
 const User = db.user;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const { customAlphabet } = require("nanoid");
+const crypto = require("crypto");
 
 // Mysql DB
 // const register = (req, res) => {
@@ -64,7 +64,7 @@ const { customAlphabet } = require("nanoid");
 
 // MongoDB
 const register = (req, res) => {
-    let nanoid = customAlphabet('1234567890', 8);
+    let id = crypto.randomBytes(8).toString("hex");;
     if (req.body.confPassword === req.body.password) {
         const user = new User({
             id: nanoid(),
