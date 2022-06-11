@@ -4,7 +4,7 @@ const { GridFsStorage } = require("multer-gridfs-storage");
 const dbConfig = require("../config/db.config.js");
 const { resolve } = require("path");
 
-let storageUrl = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`;
+let storageUrl = `${dbConfig.HOST}`;
 
 const storage = new GridFsStorage({
     url: `${storageUrl}`,

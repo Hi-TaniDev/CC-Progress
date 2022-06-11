@@ -14,9 +14,17 @@
 // }
 
 // MongoDB
+// module.exports = {
+//     HOST: "localhost",
+//     PORT: 27017,
+//     DB: "app_db",
+//     PHOTOBUCKET: "photos"
+// }
+
+const dbUrl = "mongodb+srv://ardo:" + encodeURIComponent("jonathanleonardo") + "@hitani.uicwz.mongodb.net"
+
 module.exports = {
-    HOST: "localhost",
-    PORT: 27017,
-    DB: "app_db",
+    HOST : dbUrl,
+    DB : "hitani",
     PHOTOBUCKET: "photos"
 }

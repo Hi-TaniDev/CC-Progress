@@ -1,7 +1,9 @@
 const { upload } = require("../middleware/upload.js");
 const dbConfig = require("../config/db.config.js");
-const dbUrl = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`;
-const baseUrl = `http://localhost:5000/files`;
+const GridFSBucket  = require("mongodb").GridFSBucket;
+// const dbUrl = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`;
+const dbUrl = `${dbConfig.HOST}`;
+const baseUrl = `http://localhost:8080/files`;
 
 const MongoClient = require("mongoose").mongo.MongoClient;
 const mongoClient = new MongoClient(dbUrl);
@@ -42,10 +44,13 @@ const getListFiles = async(req, res) => {
             })
         }
         let fileInfos = [];
+        const bucket = new GridFSBucket(database, {
+            bucketName: dbConfig.PHOTOBUCKET,
+        });
         await cursor.forEach((doc) => {
             fileInfos.push({
                 name: doc.filename,
-                url: baseUrl + doc.filename,
+                url: `${baseUrl}/${doc.filename}`,
                 userId : doc.metadata.userId
             });
         });
@@ -55,6 +60,30 @@ const getListFiles = async(req, res) => {
     }
 }
 
-const uploadController = { uploadFiles, getListFiles };
+const downloadFile = async (req, res) => {
+    try{
+        await mongoClient.connect();
+        const database = mongoClient.db(dbConfig.DB);
+        const bucket = new GridFSBucket(database, {
+            bucketName: dbConfig.PHOTOBUCKET,
+        });
+        let downloadStream = bucket.openDownloadStreamByName(req.params.name);
+        downloadStream.on("data", function(data){
+            return res.status(200).write(data);
+        });
+        downloadStream.on("error", function (err) {
+            return res.status(404).send({ message: "Cannot download the Image!" });
+        });
+        downloadStream.on("end", () => {
+            return res.end();
+        });
+    } catch(error) {
+        return res.status(500).send({
+            message : error.message
+        });
+    }
+};
+
+const uploadController = { uploadFiles, getListFiles, downloadFile };
 
 module.exports = { uploadController };
