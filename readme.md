@@ -10,11 +10,13 @@ This is a simple API created to fullfill the HiTani application needs.
   `const dbUrl = "<Your MongoDB link>"`
 - Test the code locally.  If it was a success, then copy the files into your own repository.
 - Open Google Cloud Platform.
-- Create your own Compute Engine VM.
+- Create your own Compute Engine VM with static external IP.
 - Connect with SSH into your Compute Engine VM.
 - Install **nodejs** and **npm** inside your VM. Run : 
   `sudo apt-get update && apt-get install nodejs npm -y`
 - Clone your own repo into your VM.
+- Insert the External IP of your VM Machine to the baseUrl parameter inside **upload.controller.js**
+  `const dbUrl = "<Your MongoDB link>"`
 - Run : `npm init`
 - Install nginx, Run : `sudo apt-get install nginx -y`
 - Open directory **/etc/nginx/sites-available** inside your VM.
