@@ -3,7 +3,7 @@ const dbConfig = require("../config/db.config.js");
 const GridFSBucket  = require("mongodb").GridFSBucket;
 // const dbUrl = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`;
 const dbUrl = `${dbConfig.HOST}`;
-const baseUrl = `https://hitani.et.r.appspot.com/files`;
+const baseUrl = `http://34.128.73.175/files`;
 
 const MongoClient = require("mongoose").mongo.MongoClient;
 const mongoClient = new MongoClient(dbUrl);
