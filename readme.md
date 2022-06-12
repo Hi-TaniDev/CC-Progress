@@ -37,3 +37,13 @@ This is a simple API created to fullfill the HiTani application needs.
 - Go to your git code repository inside your VM
 - Run : `sudo npm install -g pm2`
 - Then run your server : `pm2 start server.js`
+
+## API Endpoint
+Endpoint | Deskripsi |
+--- | --- |
+POST : /register | Create a new account |
+POST : /login | Sign in into the app  |
+POST : /upload | Upload a new image to the database  |
+GET : /files | Get a list of url for uploaded user image in the database |
+GET : /files/<filename> | Get a specific image from the database based on image name  |
+POST : /logout | Sign out fro the app |
