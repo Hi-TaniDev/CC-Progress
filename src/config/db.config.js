@@ -21,7 +21,7 @@
 //     PHOTOBUCKET: "photos"
 // }
 
-const dbUrl = "mongodb+srv://admin:" + encodeURIComponent("admin") + "@hitani.0dt11yi.mongodb.net"
+const dbUrl = "<Isi Link Mongo DB>"
 
 module.exports = {
     HOST : dbUrl,
