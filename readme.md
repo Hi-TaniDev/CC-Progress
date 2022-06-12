@@ -16,7 +16,7 @@ This is a simple API created to fullfill the HiTani application needs.
   `sudo apt-get update && apt-get install nodejs npm -y`
 - Clone your own repo into your VM.
 - Insert the External IP of your VM Machine to the baseUrl parameter inside **upload.controller.js**
-  `const dbUrl = "<Your MongoDB link>"`
+  `const baseUrl = "<Your VM External IP link>"`
 - Run : `npm init`
 - Install nginx, Run : `sudo apt-get install nginx -y`
 - Open directory **/etc/nginx/sites-available** inside your VM.
